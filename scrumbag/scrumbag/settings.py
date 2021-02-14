@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -39,16 +40,24 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 ]
 
-CUSTOM_APPS = ["accounts", "taskboard"]
+CUSTOM_APPS = ["accounts", "taskboard", "frontend"]
 THIRD_PARTY_APPS = [
     "rest_framework",
     "knox",
+    "django_extensions",
 ]
 
 INSTALLED_APPS += THIRD_PARTY_APPS
 INSTALLED_APPS += CUSTOM_APPS
 
 DEFAULT_RENDERER_CLASSES = ("rest_framework.renderers.JSONRenderer",)
+
+GRAPH_MODELS = {
+    "all_applications": True,
+    "group_models": True,
+    "app_labels": ["taskboard", "accounts"],
+}
+
 
 if DEBUG:
     DEFAULT_RENDERER_CLASSES = DEFAULT_RENDERER_CLASSES + (

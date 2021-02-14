@@ -8,21 +8,9 @@ class TaskboardSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class StageSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Stage
-        fields = "__all__"
-
-
 class TaskSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
-        fields = "__all__"
-
-
-class RoleSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Role
         fields = "__all__"
 
 

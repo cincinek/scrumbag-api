@@ -3,14 +3,12 @@ from knox.models import AuthToken
 from rest_framework import generics, permissions, viewsets
 from rest_framework.response import Response
 
-from .models import Profile, Membership
+from .models import Profile
 from .serializers import (
     LoginSerializer,
     ProfileSerializer,
     RegisterSerializer,
     UserSerializer,
-    MembershipSerializer,
-    TeamSerializer,
 )
 
 
@@ -21,6 +19,7 @@ class RegisterAPI(generics.GenericAPIView):
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
+        print(request.data)
         user = serializer.save()
         _, token = AuthToken.objects.create(user)
         return Response(
@@ -72,39 +71,3 @@ class ProfileAPI(generics.RetrieveAPIView):
 
     def get_object(self):
         return self.request.user.profile
-
-
-# Membership API
-class MembershipAPI(viewsets.ModelViewSet):
-    permission_classes = [
-        permissions.IsAuthenticated,
-    ]
-    serializer_class = MembershipSerializer
-
-    def perform_create(self, serializer):
-        """Add member of the team"""
-        serializer.save()
-        return Response(serializer.data)
-
-    def get_queryset(self):
-        """Return memebers of given team"""
-        team_id = self.request.data["team_id"]
-        queryset = Membership.objects.get(team=team_id)
-        return queryset
-
-
-class TeamAPI(viewsets.ModelViewSet):
-    permission_classes = [
-        permissions.IsAuthenticated,
-    ]
-    serializer_class = TeamSerializer
-
-    def perform_create(self, serializer):
-        """Add member of the team"""
-        serializer.save(owner=self.request.user.profile)
-        return Response(serializer.data)
-
-    def get_queryset(self):
-        """Return owned teams"""
-        queryset = Membership.objects.get(owner=self.request.user.profile)
-        return queryset

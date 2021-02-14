@@ -30,6 +30,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         extra_kwargs = {"password": {"write_only": True}}
 
     def create(self, validated_data):
+        print(validated_data)
         if (
             validated_data["email"]
             and User.objects.filter(email=validated_data["email"])
@@ -81,15 +82,3 @@ class ProfileUpdateSerializer(serializers.ModelSerializer):
             subcategory=validated_data["subcategory"]
             # nip = profile_data['nip'],
         )
-
-
-class MembershipSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Membership
-        fields = "__all__"
-
-
-class TeamSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Team
-        fields = "__all__"

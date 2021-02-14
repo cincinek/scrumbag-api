@@ -5,9 +5,10 @@ from django.contrib.auth import views as auth_views
 from rest_framework import routers
 
 router = routers.DefaultRouter()
-router.register("api/auth/team", TeamAPI, "team")
+
 
 urlpatterns = [
+    # path("api/auth/member", MembershipAPI.as_view()),
     path("api/auth", include("knox.urls")),
     path("api/auth/register", RegisterAPI.as_view()),
     path("api/auth/login", LoginAPI.as_view()),

@@ -1,0 +1,4 @@
+{
+    "python.pythonPath": "/home/m1ndfck/.local/share/virtualenvs/scrumbag-5FaTk_Im/bin/python",
+    "python.formatting.provider": "black"
+}
